@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("POSTGRES_URL")
+//Definir y llamar una funcion que permita  crear  con  de este arreglo  en base a base de datos, aplicando el cliente prisma:
+}
+model IFunction {
+  id         Int       @id @default(autoincrement())
+  name        String
+  returnType  String
+  detail      String
+
+  parameters  IParameters[]
+}
+
+model IParameters {
+  id          Int       @id @default(autoincrement())
+  description String
+  type        String
+  defaultValue String
+  FunctionId  Int
+  function    IFunction @relation(fields: [FunctionId], references: [id])
+}
